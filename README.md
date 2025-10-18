@@ -20,7 +20,7 @@ Welcome to the Text Game project! This repository contains the source code and r
     ```
 3. Run the game:
     ```bash
-    poetry run python main.py
+    poetry run python game/main.py
     ```
 
 ## Contributing
