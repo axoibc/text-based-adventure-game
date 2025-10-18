@@ -1,5 +1,5 @@
-from commands import Directions, opposite_direction
-from Room import Room
+from game.commands import Directions, opposite_direction
+from game.Room import Room
 
 
 class Rooms():

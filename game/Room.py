@@ -1,5 +1,5 @@
 """ Room class for a text-based adventure game. """
-from commands import Directions
+from game.commands import Directions
 from GameObject import GameObject
     
 class Room(GameObject):

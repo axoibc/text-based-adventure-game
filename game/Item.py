@@ -1,7 +1,7 @@
 """ Objects for the text-based adventure game. """
 
 from GameObject import GameObject
-from Room import Room
+from game.Room import Room
 
 class Item(GameObject):
     """ Class representing an item in the game and its actions."""

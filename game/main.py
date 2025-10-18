@@ -1,8 +1,8 @@
 """ Main game loop for a text-based adventure game. """
 from Objects import Objects
-from Rooms import Rooms
+from game.Rooms import Rooms
 from inventory import PlayerInventory 
-from commands import CommandWords, Directions
+from game.commands import CommandWords, Directions
 import yaml
 
 class Game():
@@ -15,7 +15,7 @@ class Game():
         self.items = {}
         self.inventory = PlayerInventory()
 
-    def load_rooms_and_items(self, file_path="rooms.yaml"):
+    def load_rooms_and_items(self, file_path="game/rooms.yaml"):
         # This function would load rooms and items from a file or define them here.
         with open(file_path, "r") as file:
             data = yaml.safe_load(file)
