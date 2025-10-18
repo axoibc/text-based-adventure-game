@@ -1,0 +1,75 @@
+---
+rooms:
+  foyer:
+    starting_room: true
+    description: "You are standing in the foyer of a grand mansion. A chandelier hangs above you."
+    examine: "The foyer is decorated with antique furniture and a large mirror."
+    exits:
+      north: library
+      east: kitchen
+    takeable_items:
+      - key
+  library:
+    description: You are in a quiet library filled with shelves of books.
+    examine: "You see rows of old books. One book seems to be sticking out slightly."
+    exits:
+      south: foyer
+    takeable_items:
+      - book
+  kitchen:
+    description: "You are in a large kitchen with a long dining table."
+    examine: "The kitchen is bustling with activity. A chef is busy preparing food."
+    exits:
+      west: foyer
+      east: dining
+      down: trapdoor
+  trapdoor:
+    description: "You have found a hidden trapdoor leading to a dark basement."
+    examine: "The trapdoor creaks as you open it, revealing a dark staircase leading down."
+    exits:
+      up: kitchen
+      down: basement
+  basement:
+    description: "You are in a dark, damp basement. You can barely see anything."
+    examine: "The basement smells musty. You notice a faint light coming from a corner."
+    exits:
+      up: kitchen
+  dining:
+    description: "You are in an elegant dining room with a large table set for a feast."
+    examine: "The dining room is lavishly decorated, with silverware and crystal glasses."
+    exits:
+      west: kitchen
+items:
+  key:
+    description: "A rusty old key."
+    location: foyer
+    examine: "The key looks ancient and worn."
+    drop: "You drop the key on the ground."
+    use:
+      location: library
+      success: "You unlock a secret compartment in the bookshelf."
+      failure: "The key doesn't seem to fit anywhere here."
+      room_state: unlocked
+  book:
+    description: "An old dusty book."
+    location: library
+    examine: "The book is titled 'Secrets of the Mansion'."
+    drop: "You place the book back on the shelf."
+    use:
+      location: library
+      success: "You find a hidden note inside the book."
+      failure: "Nothing happens when you try to use the book here."
+    contains: 
+      name: note
+      description: "A small handwritten note."
+      examine: "The note reads: 'The key unlocks more than just doors...'"
+      drop: "You carefully fold the note and put it away."
+npcs:
+  butler:
+    description: "An elderly butler with a stern expression."
+    dialogue: "Good day, sir. How may I assist you?"
+    location: foyer
+  chef:
+    description: "A jovial chef with a large hat."
+    dialogue: "Welcome to my kitchen! Care for a taste?"
+    location: kitchen 
