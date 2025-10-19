@@ -4,10 +4,20 @@ from GameObject import GameObject
 from game.Room import Room
 
 class Item(GameObject):
-    """ Class representing an item in the game and its actions."""
+    """ Class representing an item in the game, anything it contains and its actions."""
 
-    def __init__(self, name, **kwargs):
+    objects: dict[str, Item]
+
+    def __init__(self, name, **kwargs ):
         super().__init__(name, **kwargs)
+        self.objects = {}
+
+    def add_object(self, item: Item):
+        self.objects[item.name] = item
+
+    def remove_object(self, item_name: str):
+        if item_name in self.objects:
+            del self.objects[item_name]
 
     def drop(self, target_room : Room) -> str:
         self.location = target_room.name
@@ -17,14 +27,19 @@ class Item(GameObject):
     def examine(self) -> str:
         return self.examine_text if self.examine_text else self.description
 
-    def use(self, target : Room) -> str:
+    def use(self, target : Room, player: Player) -> str:
         if self.usage and target:
             self.usage["location"] = target.name
             if self.usage.get("room_state", False):
                 target.update_room_state(self.usage.get("room_state", None))
-            if self.contains:
-                item_to_add = Item(self.contains["name"], **self.contains)
-                target.add_item(item_to_add)
+            if self.objects:
+                for obj in self.objects.values():
+                    target.add_item(obj)
+                    obj.location = target.name
+                if obj:
+                    self.remove_object(obj.name)
+                    target.use(obj)
+     
             return self.usage["success"]
         else:
             return self.usage["failure"]

@@ -8,14 +8,13 @@ class GameObject(ABC):
     examine_text: str
     contains: str
     usage: dict
-    takeable_items: list[str]
 
     def __init__(self, name, **kwargs):
         self.name = name
         self.description = kwargs.get("description", "")
         self.location = kwargs.get("location", "")
         self.examine_text = kwargs.get("examine_text", "")
-        self.contains = kwargs.get("contains", "")
+        self.contains = kwargs.get("contains", [])
         self.usage = kwargs.get("use", {})
         self.takeable_items = kwargs.get("takeable_items", [])
         

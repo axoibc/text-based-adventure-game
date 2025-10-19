@@ -1,0 +1,10 @@
+---
+npcs:
+  butler:
+    description: "An elderly butler with a stern expression."
+    dialogue: "Good day, sir. How may I assist you?"
+    location: foyer
+  chef:
+    description: "A jovial chef with a large hat."
+    dialogue: "Welcome to my kitchen! Care for a taste?"
+    location: kitchen 

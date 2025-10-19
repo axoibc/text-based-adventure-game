@@ -1,0 +1,28 @@
+---
+items:
+  key:
+    description: "A rusty old key."
+    location: foyer
+    examine: "The key looks ancient and worn."
+    drop: "You drop the key on the ground."
+    use:
+      location: library
+      success: "You unlock a secret compartment in the bookshelf."
+      failure: "The key doesn't seem to fit anywhere here."
+      room_state: unlocked
+  book:
+    description: "An old dusty book."
+    location: library
+    examine: "The book is titled 'Secrets of the Mansion'."
+    drop: "You place the book back on the shelf."
+    use:
+      location: library
+      success: "You find a hidden note inside the book."
+      failure: "Nothing happens when you try to use the book here."
+    contains: 
+      - note
+  note:
+    description: "A small handwritten note."
+    location: book
+    examine: "The note reads: 'The key unlocks more than just doors...'"
+    drop: "You carefully fold the note and put it away."  

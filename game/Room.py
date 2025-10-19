@@ -8,6 +8,7 @@ class Room(GameObject):
     starting_room: bool
     room_state: str
     inventory: list[GameObject]
+    takeable_items: list[str]
 
     def __init__(self, name, room_data):
         super().__init__(name, **room_data)
