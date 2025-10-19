@@ -22,9 +22,9 @@ class CommandWords(enum.Enum):
     HELP = "help"
     INVENTORY = "inventory"
     QUIT = "quit"
+    READ = "read"
 
-
-COMMANDS = [CommandWords.EXAMINE, CommandWords.TAKE, CommandWords.DROP, CommandWords.LOOK, CommandWords.USE, CommandWords.INVENTORY, CommandWords.QUIT, Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST, Directions.UP, Directions.DOWN]
+COMMANDS = [CommandWords.EXAMINE, CommandWords.TAKE, CommandWords.DROP, CommandWords.LOOK, CommandWords.USE, CommandWords.INVENTORY, CommandWords.QUIT, CommandWords.READ, Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST, Directions.UP, Directions.DOWN]
 
 def opposite_direction(direction: Directions) -> Directions:
     opposites = {

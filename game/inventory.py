@@ -27,12 +27,3 @@ class Inventory:
             return "Empty."
         return  self.items.values()
 
-class PlayerInventory(Inventory):
-    def __init__(self):
-        super().__init__()
-
-    def __str__(self):
-        if not self.items:
-            return "Your inventory is empty."
-        item_list = ', '.join(self.items.keys())
-        return f"Inventory: {item_list}"

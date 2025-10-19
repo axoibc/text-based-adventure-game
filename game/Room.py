@@ -1,6 +1,46 @@
 """ Room class for a text-based adventure game. """
-from game.commands import Directions
-from GameObject import GameObject
+from game.commands import Directions, opposite_direction
+from gameobject import GameObject, GameObjects
+
+
+class Rooms:
+    rooms: dict[str, Room]
+
+    def __init__(self):
+        self.rooms = {}
+
+    def load(self, data, items : GameObjects):
+        self.rooms = {}
+        for room_name, room_data in data["rooms"].items():
+            room = Room(room_name, room_data)
+            self.rooms[room_name] = room
+            for item_name in items.items:  
+                item = items.get_object(item_name)
+                if item and item.location == room_name:  
+                    room.add_item(item)
+
+        for room_name, room_data in data["rooms"].items():
+            for direction, to_room in room_data["exits"].items():
+                if self.rooms.get(to_room):
+                    print(f"Linking {room_name} to {to_room} via {direction}")
+                    self.rooms[room_name].add_exit(Directions(direction), to_room)
+                    self.rooms[to_room].add_exit(opposite_direction(Directions(direction)), room_name)
+       
+
+    def get_room(self, room_name: str) -> Room | None:
+        return self.rooms.get(room_name)
+
+    def get_starting_room(self) -> Room | None:
+        for room in self.rooms.values():
+            if room.starting_room:
+                return room
+        return None
+    
+    def has_room(self, room_name):
+        return self.rooms.get(room_name) is not None
+    
+    def __str__(self):
+        return "\n".join(str(room) for room in self.rooms.values())
     
 class Room(GameObject):
 
@@ -15,8 +55,8 @@ class Room(GameObject):
         self.exits = { dir.value: None for dir in Directions }
         for direction, to_room in room_data["exits"].items():
             self.exits[Directions(direction)] = to_room
-        self.starting_room = False
-        self.room_state = "locked"
+        self.starting_room = room_data.get("starting_room", False)
+        self.room_state = room_data.get("starting_room", "locked")
         self.inventory = []
 
     def add_exit(self, direction: Directions, room: Room):
@@ -61,8 +101,8 @@ class Room(GameObject):
         self.room_state = new_state  
 
     def examine(self) -> str:
-        item_list = ', '.join(item.name for item in self.inventory) if self.inventory else "None"
-        if item_list:
+        if self.inventory:
+            item_list = ', '.join(item.name for item in self.inventory)
             return f"{self.description}\nYou see the following items: {item_list}"
         else:
             return f"{self.description}"

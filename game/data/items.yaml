@@ -25,4 +25,7 @@ items:
     description: "A small handwritten note."
     location: book
     examine: "The note reads: 'The key unlocks more than just doors...'"
-    drop: "You carefully fold the note and put it away."  
+    drop: "You carefully fold the note and put it away."
+    use:
+      success: "The note reads: 'The key unlocks more than just doors...'"
+      failure: "The note reads: 'The key unlocks more than just doors...'"  
