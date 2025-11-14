@@ -2,6 +2,7 @@ from abc import ABC
 
 from game.player import Player
 
+
 class GameObjects:
     items: dict[str, GameObject]
 
@@ -40,7 +41,7 @@ class GameObject(ABC):
         self.contains = []
         self.usage = {}
         self.takeable_items = []
-        self.objects = {}   
+        self.objects = {}
 
     def __init__(self, name, **kwargs):
         self.name = name
@@ -51,32 +52,32 @@ class GameObject(ABC):
         self.usage = kwargs.get("use", {})
         self.takeable_items = kwargs.get("takeable_items", [])
         self.objects = {}
-    
+
     def __str__(self):
         return f"{self.name}: {self.description}"
-    
+
     def add_object(self, item: GameObject):
         self.objects[item.name] = item
 
     def remove_object(self, item_name: str):
         if item_name in self.objects:
             del self.objects[item_name]
-    
-    def drop(self, location : GameObject):
-        """ Drop this object in a target GameObject location """
+
+    def drop(self, location: GameObject):
+        """Drop this object in a target GameObject location"""
         location.add_item(self)
         self.location = location.name
         return f"You dropped the {self.name} in the {location.name}."
-    
+
     def take(self):
         self.location = "inventory"
         return f"You took the {self.name}."
-    
+
     def examine(self) -> str:
         return self.examine_text if self.examine_text else self.description
 
-    def use(self, target : GameObject, player: Player) -> str:
-        """ Use this object on a target GameObject and Player"""
+    def use(self, target: GameObject, player: Player) -> str:
+        """Use this object on a target GameObject and Player"""
         if self.usage:
             location = self.usage.get("location", None)
             if location and target.name == location:
@@ -91,7 +92,7 @@ class GameObject(ABC):
                     print(obj.use(target, player))
                 if obj:
                     self.remove_object(obj.name)
-        
+
             return self.usage["success"]
         else:
             return self.usage["failure"]

@@ -1,6 +1,7 @@
-""" Directions for the text-based adventure game. """
+"""Directions for the text-based adventure game."""
 
 import enum
+
 
 class Directions(enum.Enum):
     NORTH = "north"
@@ -10,7 +11,16 @@ class Directions(enum.Enum):
     UP = "up"
     DOWN = "down"
 
-DIRECTIONS = [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST, Directions.UP, Directions.DOWN]
+
+DIRECTIONS = [
+    Directions.NORTH,
+    Directions.SOUTH,
+    Directions.EAST,
+    Directions.WEST,
+    Directions.UP,
+    Directions.DOWN,
+]
+
 
 class CommandWords(enum.Enum):
     EXAMINE = "examine"
@@ -24,7 +34,24 @@ class CommandWords(enum.Enum):
     QUIT = "quit"
     READ = "read"
 
-COMMANDS = [CommandWords.EXAMINE, CommandWords.TAKE, CommandWords.DROP, CommandWords.LOOK, CommandWords.USE, CommandWords.INVENTORY, CommandWords.QUIT, CommandWords.READ, Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST, Directions.UP, Directions.DOWN]
+
+COMMANDS = [
+    CommandWords.EXAMINE,
+    CommandWords.TAKE,
+    CommandWords.DROP,
+    CommandWords.LOOK,
+    CommandWords.USE,
+    CommandWords.INVENTORY,
+    CommandWords.QUIT,
+    CommandWords.READ,
+    Directions.NORTH,
+    Directions.SOUTH,
+    Directions.EAST,
+    Directions.WEST,
+    Directions.UP,
+    Directions.DOWN,
+]
+
 
 def opposite_direction(direction: Directions) -> Directions:
     opposites = {
@@ -33,6 +60,6 @@ def opposite_direction(direction: Directions) -> Directions:
         Directions.EAST: Directions.WEST,
         Directions.WEST: Directions.EAST,
         Directions.UP: Directions.DOWN,
-        Directions.DOWN: Directions.UP
+        Directions.DOWN: Directions.UP,
     }
     return opposites.get(direction)

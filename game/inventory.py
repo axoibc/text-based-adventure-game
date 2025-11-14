@@ -1,5 +1,6 @@
-""" Inventory class for a text-based adventure game. """
-from Item import Item
+"""Inventory class for a text-based adventure game."""
+
+from item import Item
 
 
 class Inventory:
@@ -18,12 +19,11 @@ class Inventory:
 
     def has_item(self, item: str) -> bool:
         return item in self.items.keys()
-    
+
     def get_item(self, item: str) -> Item:
         return self.items.get(item, None)
 
     def __str__(self):
         if not self.items:
             return "Empty."
-        return  self.items.values()
-
+        return self.items.values()

@@ -1,4 +1,5 @@
-""" Room class for a text-based adventure game. """
+"""Room class for a text-based adventure game."""
+
 from game.commands import Directions, opposite_direction
 from gameobject import GameObject, GameObjects
 
@@ -9,14 +10,14 @@ class Rooms:
     def __init__(self):
         self.rooms = {}
 
-    def load(self, data, items : GameObjects):
+    def load(self, data, items: GameObjects):
         self.rooms = {}
         for room_name, room_data in data["rooms"].items():
             room = Room(room_name, room_data)
             self.rooms[room_name] = room
-            for item_name in items.items:  
+            for item_name in items.items:
                 item = items.get_object(item_name)
-                if item and item.location == room_name:  
+                if item and item.location == room_name:
                     room.add_item(item)
 
         for room_name, room_data in data["rooms"].items():
@@ -24,8 +25,9 @@ class Rooms:
                 if self.rooms.get(to_room):
                     print(f"Linking {room_name} to {to_room} via {direction}")
                     self.rooms[room_name].add_exit(Directions(direction), to_room)
-                    self.rooms[to_room].add_exit(opposite_direction(Directions(direction)), room_name)
-       
+                    self.rooms[to_room].add_exit(
+                        opposite_direction(Directions(direction)), room_name
+                    )
 
     def get_room(self, room_name: str) -> Room | None:
         return self.rooms.get(room_name)
@@ -35,13 +37,14 @@ class Rooms:
             if room.starting_room:
                 return room
         return None
-    
+
     def has_room(self, room_name):
         return self.rooms.get(room_name) is not None
-    
+
     def __str__(self):
         return "\n".join(str(room) for room in self.rooms.values())
-    
+
+
 class Room(GameObject):
 
     exits: dict[Directions, str]
@@ -52,7 +55,7 @@ class Room(GameObject):
 
     def __init__(self, name, room_data):
         super().__init__(name, **room_data)
-        self.exits = { dir.value: None for dir in Directions }
+        self.exits = {dir.value: None for dir in Directions}
         for direction, to_room in room_data["exits"].items():
             self.exits[Directions(direction)] = to_room
         self.starting_room = room_data.get("starting_room", False)
@@ -67,9 +70,9 @@ class Room(GameObject):
             return self.exits.get(direction.value)
         return self.name
 
-    def add_item(self, item : GameObject):
+    def add_item(self, item: GameObject):
         self.inventory.append(item)
-    
+
     def has_item(self, item_name: str) -> bool:
         return self.get_item(item_name) is not None
 
@@ -87,7 +90,7 @@ class Room(GameObject):
         self.inventory.remove(item)
         print(f"You have taken the {item_name}.")
         return item
-    
+
     def use_item(self, item_name: str) -> str:
         if not self.has_item(item_name):
             return f"There is no {item_name} here to use."
@@ -98,17 +101,21 @@ class Room(GameObject):
         self.starting_room = is_starting
 
     def update_room_state(self, new_state: str):
-        self.room_state = new_state  
+        self.room_state = new_state
 
     def examine(self) -> str:
         if self.inventory:
-            item_list = ', '.join(item.name for item in self.inventory)
+            item_list = ", ".join(item.name for item in self.inventory)
             return f"{self.description}\nYou see the following items: {item_list}"
         else:
             return f"{self.description}"
 
     def __str__(self):
         dirs = [dir for dir in Directions if self.exits[dir.value] is not None]
-        exit_names = ', '.join(dirs[i].value for i in range(len(dirs)))
-        items_in_room = ', '.join(item.name for item in self.inventory) if self.inventory else "None"
+        exit_names = ", ".join(dirs[i].value for i in range(len(dirs)))
+        items_in_room = (
+            ", ".join(item.name for item in self.inventory)
+            if self.inventory
+            else "None"
+        )
         return f"{self.name}\n\n{self.description}\n\nExits: {exit_names}\n\nItems in room: {items_in_room}"
